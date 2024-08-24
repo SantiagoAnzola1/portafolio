@@ -1,0 +1,17 @@
+---
+interface Props {
+  id?: string;
+  className?: string;
+  href?: string;
+}
+
+const { id, className, href }: Props = Astro.props;
+---
+
+<a
+  id={id ? id : null}
+  href={href ? href : null}
+  class=`flex-center gap-2 font-semibold py-2 px-4 rounded-full hover:scale-105 ${className} `
+>
+  <slot />
+</a>

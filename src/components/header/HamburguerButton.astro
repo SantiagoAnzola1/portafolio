@@ -1,0 +1,76 @@
+---
+import ButtonHeader from "./ButtonHeader.astro";
+---
+
+<ButtonHeader id="hamburguer-menu" aria-label="Menu principal">
+  <svg
+    class="svg-button text-secondary w-4"
+    stroke="currentColor"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    viewBox="0 0 24 24"
+  >
+    <line x1="4" y1="4" x2="20" y2="20" stroke-width="2" class="line line1"
+    ></line>
+    <line x1="20" y1="4" x2="4" y2="20" stroke-width="2" class="line line2"
+    ></line>
+
+    <circle cx="4" cy="4" r="1" class="point" stroke-width="2"></circle>
+    <circle cx="20" cy="4" r="1" class="point" stroke-width="2"></circle>
+    <circle cx="4" cy="20" r="1" class="point" stroke-width="2"></circle>
+    <circle cx="20" cy="20" r="1" class="point" stroke-width="2"></circle>
+  </svg>
+</ButtonHeader>
+<style>
+  .svg-button {
+    cursor: pointer;
+  }
+
+  .line {
+    stroke: white;
+    stroke-width: 3;
+    fill: none;
+    stroke-dasharray: 30;
+    stroke-dashoffset: 30;
+    transition:
+      stroke-dashoffset 0.24s cubic-bezier(0.4, 0, 0.2, 1),
+      stroke-width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .line1 {
+    stroke-dasharray: 30;
+  }
+
+  .line2 {
+    transition-delay: 0.12s !important;
+    stroke-dasharray: 30;
+  }
+
+  .opened .line1 {
+    stroke-dasharray: 30;
+    stroke-dashoffset: 0;
+  }
+
+  .opened .line2 {
+    stroke-dasharray: 30;
+    stroke-dashoffset: 0;
+  }
+
+  .point {
+    fill: white;
+    transition: opacity 0.3s ease;
+  }
+  .opened .point {
+    opacity: 0;
+    transition-delay: 0.25s !important;
+  }
+</style>
+<script>
+  const button = document.getElementById("hamburguer-menu");
+  let isOpened = "false";
+  button?.addEventListener("click", () => {
+    button.classList.toggle("opened");
+    isOpened = button.classList.contains("opened").toString();
+    button?.setAttribute("aria-expanded", isOpened);
+  });
+</script>

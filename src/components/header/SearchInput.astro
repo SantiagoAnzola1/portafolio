@@ -1,0 +1,89 @@
+---
+import Search from "../../../public/assets/icons/Search.astro";
+---
+
+<section
+  id="search-expandible"
+  class="h-0 w-full z-50 bg-background-contrast transition-all ease-in-out duration-100 absolute bottom-0 left-0 right-0 top-0 grid place-items-center mt-11"
+>
+  <div class="max-w-7xl px-6 flex items-center justify-center h-full">
+    <div
+      id="search-container"
+      class="flex items-center justify-center h-full w-full invisible transition-all ease-in-out duration-[50ms]"
+    >
+      <button
+        aria-label="Buscar sobre Santiago Anzola"
+        aria-labelledby="search-input"
+        class="pr-3"
+      >
+        <Search class="size-6 text-light-3" />
+      </button>
+      <input
+        id="search-input"
+        type="text"
+        placeholder="Busca o preguntale a SanzBardAI sobre mí "
+        class="w-full h-10 text-secondary text-2xl bg-transparent border-none focus:outline-none md:min-w-[510px]"
+      />
+    </div>
+  </div>
+</section>
+<script>
+  //input search
+
+  import { addScrollListener } from "../../scripts/scrollHandler";
+
+  // document.addEventListener("DOMContentLoaded", () => {
+  let isExpanded = false;
+  const searchButton = document.querySelector("#search-button") as HTMLElement;
+  const searchExpandible = document.querySelector(
+    "#search-expandible"
+  ) as HTMLElement;
+  const searchContainer = document.querySelector(
+    "#search-container"
+  ) as HTMLElement;
+  const backgroudBlur = document.querySelector(
+    "#background-blur"
+  ) as HTMLElement;
+  const searchInput = document.querySelector(
+    "#search-input"
+  ) as HTMLInputElement;
+  const toggleHeight = () => {
+    // if (!searchExpandible || !searchContainer) return;
+
+    if (!isExpanded) {
+      searchExpandible.classList.add("h-32");
+      searchContainer.classList.remove("invisible");
+
+      backgroudBlur.classList.remove("invisible");
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          if (searchInput) {
+            searchInput.focus();
+          }
+        });
+      });
+    } else {
+      searchExpandible.classList.remove("h-32");
+
+      searchContainer.classList.add("invisible");
+      backgroudBlur.classList.add("invisible");
+    }
+    isExpanded = !isExpanded;
+  };
+
+  const hideSearch = () => {
+    searchExpandible.classList.remove("h-32");
+    searchContainer.classList.remove("visible");
+    searchContainer.classList.add("invisible");
+    backgroudBlur.classList.add("invisible");
+    isExpanded = !isExpanded;
+  };
+
+  // window.onscroll = () => {
+  //   hideSearch();
+  // };
+  addScrollListener(hideSearch);
+
+  searchButton?.addEventListener("click", () => toggleHeight());
+  backgroudBlur.addEventListener("mouseover", () => toggleHeight());
+</script>

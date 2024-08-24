@@ -1,0 +1,54 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/header/Header.astro";
+import Welcome from "../components/hero/Hero.astro";
+import BackgroundBlur from "../components/BackgroundBlur.astro";
+
+import "../styles/globals.css";
+import Proyectos from "../components/proyectos/Proyectos.astro";
+import LateralSocialMediaButtons from "../components/LateralSocialMediaButtons.astro";
+import getProjects from '../api/api'
+
+const projects=await getProjects()
+---
+
+<Layout
+  title="Portafolio de Santiago Anzola"
+  description="Ingeniero Multimedia con experiencia en Desarrollo Web, Audiovisuales, Edición de video, Diseño"
+>
+  <Header />
+  <BackgroundBlur />
+
+  <main class="h-full overflow-y-auto relative w-full">
+    <LateralSocialMediaButtons />
+    <Welcome />
+    <Proyectos />
+  </main>
+</Layout>
+
+<style is:global>
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
+<script>
+  import { initScrollListener } from "../scripts/scrollHandler";
+
+  initScrollListener();
+  // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // loadUserThemePreference();
+    if (
+      localStorage.getItem("color-theme") === "dark" ||
+      (!("color-theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("color-theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      document.documentElement.classList.add("light");
+    }
+  });
+</script>

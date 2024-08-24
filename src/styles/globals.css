@@ -1,0 +1,83 @@
+@import "@fontsource/poppins/300.css";
+@import "@fontsource/poppins/400.css";
+@import "@fontsource/poppins/500.css";
+@import "@fontsource/poppins/700.css";
+@import "@fontsource/poppins/800.css";
+@import "@fontsource/poppins/900.css";
+@import '@fontsource/space-mono/400.css';
+@import '@fontsource/space-mono/700.css';
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+ 
+ .dark{
+    --primary: 242, 116, 5;/*naranja  */
+    /* --secondary-light: 242, 116, 5; */
+    --secondary:255,255,255;/*blanco-textos  */
+    --background: 0, 0, 0;/*fondo  */
+    --background-contrast:23, 23, 23;
+    --secondary-dark: 242, 242, 242;
+    --dark-2: 41, 41, 41;
+    --dark-3: 22, 22, 23;
+    --dark-4: 30, 30, 30;
+    /* --white: 255, 255, 255; */
+    --light-2: 217, 217, 217;
+    --light-3: 134, 134, 139;
+    --blue-1: 0, 119, 237;
+    --blue-2: 130, 168, 192;
+    --blue-3: 154, 188, 185;
+ }     
+ /* .dark-mode {
+    --primary: #F2F2F2; */
+    /* --secondary-light: #F2F2F2; */
+    /* --secondary-dark: #F27405;
+    --dark-1: #1E1D1D;
+    --dark-2: #292929;
+    --dark-3: #2E2D23;
+    --dark-4: #1E1E1E;
+    --white: #ffffff;
+    --light-2: #86868B;
+    --light-3: #D9D9D9;
+    --blue-1: #82A8C0;
+    --blue-2: #9ABCB9;
+    --blue-3: #0077ED;
+  }
+   */
+@layer base {
+    
+    html {
+        @apply font-poppins bg-background
+    }
+
+    body {
+        @apply font-normal max-w-[100vw] overflow-x-hidden ;
+    }
+}
+
+.flex-center {
+    @apply flex justify-center items-center
+}
+
+.block-center {
+    @apply mx-0
+}
+mark{
+    @apply bg-transparent
+}
+
+.h2-princpal{
+ @apply font-spaceMono font-bold text-2xl text-secondary my-4
+}
+
+
+/* .project-card::before {
+    @apply absolute inset-0 bg-black opacity-0 hover:opacity-60 transition-all duration-300 ease-in-out backdrop-blur-lg;
+    content: '';
+    z-index: 100;
+} */
+

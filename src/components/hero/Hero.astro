@@ -1,0 +1,144 @@
+---
+import ButtonPrimary from "../ButtonPrimary.astro";
+import Section from "../Section.astro";
+import ArrowUp from "../../../public/assets/icons/ArrowUp.astro";
+---
+
+<Section id="welcome">
+  <div id="profile-img" class="flex items-center gap-8">
+    <img
+      id="hero-profile-img"
+      transition:name="image-profile"
+      src="/public/images/Sanzola2.webp"
+      alt="Foto Santiago Anzola"
+      class="size-24 rounded-full -z-50"
+    />
+
+    <h3 class="text-primary order-1 text-2xl font-spaceMono font-bold">
+      Santiago Anzola
+    </h3>
+  </div>
+  <article class="flex justify-between">
+    <div class="max-w-[720px]">
+      <h1 class="text-secondary text-8xl font-spaceMono font-bold mt-6">
+        Ingeniero en Multimedia
+      </h1>
+      <div>
+        <p class="text-secondary font-light mt-2">
+          Apasionado por el <mark class="text-primary font-bold"
+            >Desarrollo Web</mark
+          > y las <mark class="text-primary font-bold"
+            >Experiencias Digitales</mark
+          >. Descubre mis proyectos y habilidades a continuación.
+        </p>
+        <ButtonPrimary>
+          <span>Contactarme</span>
+          <span
+            >{
+              (
+                <ArrowUp class="group-hover:scale-100 group-hover:scale-x-[-1]" />
+              )
+            }</span
+          >
+        </ButtonPrimary>
+      </div>
+    </div>
+    <div class="text-secondary self-end font-extralight">
+      <p>Frontend</p>
+      <p>Desarrollo web</p>
+      <p>UX/UI</p>
+      <p>Audiovisuales</p>
+      <p>Edición video</p>
+    </div>
+  </article>
+</Section>
+
+<style>
+  #hero-profile-img {
+    /* view-transition-name: image-profile; */
+    width: 6rem;
+    height: 6rem;
+    contain: layout;
+    position: relative;
+    z-index: 1;
+    order: 0;
+  }
+  #hero-profile-img.overlay {
+    width: 32px;
+    height: 32px;
+  }
+
+  #hero-profile-img::view-transition-old(image-profile) {
+    /* display: none; */
+    animation: none;
+  }
+
+  #hero-profile-img::view-transition-new(image-profile) {
+    /* animation: none; */
+    display: none;
+  }
+</style>
+<script>
+  import type { JsxAttributeValue } from "typescript";
+  import { addScrollListener, getScrollY } from "../../scripts/scrollHandler";
+
+  const heroImage = document.getElementById("hero-profile-img");
+  const bigProfileImg = document.getElementById("profile-img");
+  const navbarImage = document.getElementById("nav-img");
+  const header = document.querySelector("header") as HTMLElement;
+
+  let animationTimes = 0;
+
+  function reposImage() {
+    if (!heroImage) return;
+    let scrollY = getScrollY();
+    if (scrollY > 50 && animationTimes === 0) {
+      animationTimes++;
+      navbarImage?.classList.remove("hidden");
+      header.classList.add("bg-dark-3/80");
+      // heroImage.classList.remove("fixed");
+      transition("", () => {
+        navbarImage?.appendChild(heroImage);
+        heroImage.classList.toggle("overlay");
+      });
+    }
+
+    if (scrollY === 0 && animationTimes === 1) {
+      animationTimes--;
+      header.classList.remove("bg-dark-3/80");
+
+      transition("hidden", () => {
+        navbarImage?.classList.add("hidden");
+        heroImage.classList.remove("overlay");
+        bigProfileImg?.appendChild(heroImage);
+      });
+    }
+  }
+
+  function onScroll() {
+    reposImage();
+  }
+
+  // window.addEventListener("scroll", onScroll);
+  addScrollListener(onScroll);
+
+  async function transition(classNameRemove: string, callback: VoidFunction) {
+    if (!document.startViewTransition) {
+      callback();
+      return;
+    }
+    let classes;
+    if (classNameRemove !== "") {
+      classes = classNameRemove
+        .split(" ")
+        .map((s) => s.trim())
+        .filter(Boolean);
+    }
+
+    try {
+      const transition = document.startViewTransition(callback);
+      await transition.finished;
+    } finally {
+    }
+  }
+</script>
