@@ -3,15 +3,18 @@ interface Props {
   id?: string;
   className?: string;
   href?: string;
+  targetBlank?: boolean;
 }
 
-const { id, className, href }: Props = Astro.props;
+const { id, className, href, targetBlank }: Props = Astro.props;
 ---
 
 <a
+  target={targetBlank ? "_blank" : "_self"}
+  rel={targetBlank ? "noopener noreferrer" : undefined}
   id={id ? id : null}
   href={href ? href : null}
-  class=`flex-center gap-2 font-semibold py-2 px-4 rounded-full hover:scale-105 ${className} `
+  class=`flex-center gap-1 font-regular py-2 px-3 rounded-full ${className} `
 >
   <slot />
 </a>

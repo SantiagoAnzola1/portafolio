@@ -2,14 +2,16 @@
 interface Props {
   id?: string;
   className?: string;
+  isResponsivePadding?: boolean;
 }
 
-const { id, className }: Props = Astro.props;
+const { id, className, isResponsivePadding }: Props = Astro.props;
+const paddingClass = isResponsivePadding ? "px-0" : "px-4";
 ---
 
 <section
   id={id ? id : null}
-  class=`max-w-7xl w-full mx-16 xl:px-8 mt-12 mb-16 mx-auto ${className}`
+  class=`max-w-7xl w-full ${paddingClass} sm:px-4 md:px-8 mt-12 mb-16 mx-auto ${className}`
 >
   <slot />
 </section>

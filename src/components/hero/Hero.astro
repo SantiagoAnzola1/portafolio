@@ -1,7 +1,8 @@
 ---
 import ButtonPrimary from "../ButtonPrimary.astro";
+import LateralSocialMediaButtons from "../LateralSocialMediaButtons.astro";
 import Section from "../Section.astro";
-import ArrowUp from "../../../public/assets/icons/ArrowUp.astro";
+import ArrowUp from "public/assets/icons/ArrowUp.astro";
 ---
 
 <Section id="welcome">
@@ -11,44 +12,65 @@ import ArrowUp from "../../../public/assets/icons/ArrowUp.astro";
       transition:name="image-profile"
       src="/public/images/Sanzola2.webp"
       alt="Foto Santiago Anzola"
-      class="size-24 rounded-full -z-50"
+      class="size-1/4 max-w-28 aspect-square rounded-full -z-50"
     />
 
-    <h3 class="text-primary order-1 text-2xl font-spaceMono font-bold">
+    <h3
+      class="text-primary order-1 text-lg xs:text-xl lg:text-2xl font-spaceMono font-bold"
+    >
       Santiago Anzola
     </h3>
   </div>
-  <article class="flex justify-between">
-    <div class="max-w-[720px]">
-      <h1 class="text-secondary text-8xl font-spaceMono font-bold mt-6">
-        Ingeniero en Multimedia
-      </h1>
+  <!-- <article class="flex flex-col md:flex-row justify-between"> -->
+  <article class="">
+    <!-- <div class="max-w-[100%] w-full md:max-w-[720px] order-0"> -->
+    <div class="max-w-[100%] w-full order-0">
       <div>
-        <p class="text-secondary font-light mt-2">
-          Apasionado por el <mark class="text-primary font-bold"
+        <h1
+          class="text-secondary text-3xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-spaceMono font-bold mt-6 w-full sm:max-w-[85%] md:max-w-[80%] lg:max-w-[720px]"
+        >
+          Ingeniero en Multimedia
+        </h1>
+
+        <p
+          class="text-secondary font-light mt-2 text-base md:text-lg w-full sm:max-w-[85%] md:max-w-[75%] lg:max-w-[720px]"
+        >
+          Apasionado por el <mark class="text-primary font-semibold"
             >Desarrollo Web</mark
-          > y las <mark class="text-primary font-bold"
+          > y las <mark class="text-primary font-semibold"
             >Experiencias Digitales</mark
           >. Descubre mis proyectos y habilidades a continuación.
         </p>
-        <ButtonPrimary>
-          <span>Contactarme</span>
-          <span
-            >{
-              (
-                <ArrowUp class="group-hover:scale-100 group-hover:scale-x-[-1]" />
-              )
-            }</span
+
+        <div
+          class="flex justify-between sm:items-center flex-col sm:flex-row items-start"
+        >
+          <div
+            class="order-3 sm:order-1 flex w-full items-center justify-between flex-row"
           >
-        </ButtonPrimary>
+            <ButtonPrimary>
+              <span>Contactarme</span>
+              <span
+                >{
+                  (
+                    <ArrowUp class="group-hover:scale-100 group-hover:scale-x-[-1]" />
+                  )
+                }</span
+              >
+            </ButtonPrimary>
+            <LateralSocialMediaButtons className="relative mt-8 " />
+          </div>
+          <div
+            class="text-secondary font-extralight text-sm ml:text-base sm:max-w-[50%] gap-2 mt-2 sm:mt-[-48px] md:mt-[-56px] xs:gap-4 md:block order-2 flex flex-wrap sm:block text-nowrap"
+          >
+            <p>Frontend</p>
+            <p>Desarrollo web</p>
+            <p>UX/UI</p>
+            <p>Audiovisuales</p>
+            <p>Edición video</p>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="text-secondary self-end font-extralight">
-      <p>Frontend</p>
-      <p>Desarrollo web</p>
-      <p>UX/UI</p>
-      <p>Audiovisuales</p>
-      <p>Edición video</p>
     </div>
   </article>
 </Section>
@@ -56,8 +78,6 @@ import ArrowUp from "../../../public/assets/icons/ArrowUp.astro";
 <style>
   #hero-profile-img {
     /* view-transition-name: image-profile; */
-    width: 6rem;
-    height: 6rem;
     contain: layout;
     position: relative;
     z-index: 1;
@@ -85,6 +105,7 @@ import ArrowUp from "../../../public/assets/icons/ArrowUp.astro";
   const heroImage = document.getElementById("hero-profile-img");
   const bigProfileImg = document.getElementById("profile-img");
   const navbarImage = document.getElementById("nav-img");
+  const logo = document.getElementById("logo");
   const header = document.querySelector("header") as HTMLElement;
 
   let animationTimes = 0;
@@ -95,6 +116,8 @@ import ArrowUp from "../../../public/assets/icons/ArrowUp.astro";
     if (scrollY > 50 && animationTimes === 0) {
       animationTimes++;
       navbarImage?.classList.remove("hidden");
+      logo?.classList.add("hidden");
+
       header.classList.add("bg-dark-3/80");
       // heroImage.classList.remove("fixed");
       transition("", () => {
@@ -106,7 +129,7 @@ import ArrowUp from "../../../public/assets/icons/ArrowUp.astro";
     if (scrollY === 0 && animationTimes === 1) {
       animationTimes--;
       header.classList.remove("bg-dark-3/80");
-
+      logo?.classList.remove("hidden");
       transition("hidden", () => {
         navbarImage?.classList.add("hidden");
         heroImage.classList.remove("overlay");

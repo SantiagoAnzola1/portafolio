@@ -1,40 +1,24 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Header from "../components/header/Header.astro";
-import Welcome from "../components/hero/Hero.astro";
-import BackgroundBlur from "../components/BackgroundBlur.astro";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/header/Header.astro";
+import Welcome from "@/components/hero/Hero.astro";
+import BackgroundBlur from "@/components/BackgroundBlur.astro";
+import "@/styles/globals.css";
 
-import "../styles/globals.css";
-import Proyectos from "../components/proyectos/Proyectos.astro";
-import LateralSocialMediaButtons from "../components/LateralSocialMediaButtons.astro";
-import getProjects from '../api/api'
+import Proyectos from "@/components/proyectos/Proyectos.astro";
+import Education from "@/components/education/Education.astro";
+import LateralSocialMediaButtons from "@/components/LateralSocialMediaButtons.astro";
+import getProjects from "@/api/api";
 
-const projects=await getProjects()
+const projects = await getProjects();
 ---
 
-<Layout
-  title="Portafolio de Santiago Anzola"
-  description="Ingeniero Multimedia con experiencia en Desarrollo Web, Audiovisuales, Edición de video, Diseño"
->
-  <Header />
-  <BackgroundBlur />
-
-  <main class="h-full overflow-y-auto relative w-full">
-    <LateralSocialMediaButtons />
-    <Welcome />
-    <Proyectos />
-  </main>
-</Layout>
-
-<style is:global>
-  html {
-    scroll-behavior: smooth;
-  }
-</style>
 <script>
+  import { initResizeListener } from "@/scripts/resizeHandler";
   import { initScrollListener } from "../scripts/scrollHandler";
 
   initScrollListener();
+  initResizeListener();
   // On page load or when changing themes, best to add inline in `head` to avoid FOUC
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -52,3 +36,23 @@ const projects=await getProjects()
     }
   });
 </script>
+<Layout
+  title="Portafolio de Santiago Anzola"
+  description="Ingeniero Multimedia con experiencia en Desarrollo Web, Audiovisuales, Edición de video, Diseño"
+>
+  <Header />
+  <BackgroundBlur />
+
+  <main class="h-full overflow-y-auto relative w-full">
+    <!-- <LateralSocialMediaButtons className="hidden sm:block" /> -->
+    <Welcome />
+    <Proyectos />
+    <Education />
+  </main>
+</Layout>
+
+<style is:global>
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

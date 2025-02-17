@@ -1,22 +1,16 @@
-import { debounce } from './debounce'
-
-
-const scrollCallbacks:VoidFunction[] = [];
+const scrollCallbacks: VoidFunction[] = [];
 
 let lastScrollY = 0;
-
 
 /**
  * Adds a scroll callback function to the list of scroll callbacks.
  * @param {VoidFunction} callback - The callback function to be executed on scroll.
  */
 export function addScrollListener(callback: VoidFunction) {
-  if (typeof callback === 'function') {
-
+  if (typeof callback === "function") {
     scrollCallbacks.push(callback);
   }
 }
-
 
 /**
  * Scroll event handler.
@@ -26,17 +20,16 @@ function onScroll() {
   const scrollY = window.scrollY;
 
   // if (scrollY !== lastScrollY) {
-    lastScrollY = scrollY;
+  lastScrollY = scrollY;
   // }
   scrollCallbacks.forEach((callback) => {
     // Execute the callback
     callback();
   });
 }
-export function getScrollY(){
+export function getScrollY() {
   return lastScrollY;
 }
-
 
 /**
  * Initializes the scroll listener by adding the 'scroll' event listener to the window.
@@ -45,10 +38,8 @@ export function getScrollY(){
 export function initScrollListener() {
   // Add the 'scroll' event listener to the window
   // The 'onScroll' function will be executed when a scroll event occurs
-  window.addEventListener('scroll', onScroll );
+  window.addEventListener("scroll", onScroll);
 }
-
-
 
 /**
  * Removes a scroll callback function from the list of scroll callbacks.
@@ -59,4 +50,5 @@ export function removeScrollListener(callback: VoidFunction) {
   if (index > -1) {
     scrollCallbacks.splice(index, 1);
   }
+
 }

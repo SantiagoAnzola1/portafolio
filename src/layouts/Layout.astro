@@ -25,15 +25,6 @@ const projects = await getProjects();
   </head>
   <body>
     <slot />
-    {
-      projects.map((p) => (
-        <ul>
-          <li>
-            <a href="">{p.title}</a>
-          </li>
-        </ul>
-      ))
-    }
   </body>
 </html>
 <style is:global>

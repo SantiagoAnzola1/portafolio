@@ -66,11 +66,11 @@ import ButtonHeader from "./ButtonHeader.astro";
   }
 </style>
 <script>
+  import { toggleHamburguerMenu } from "./hamburguer-button";
   const button = document.getElementById("hamburguer-menu");
+
   let isOpened = "false";
   button?.addEventListener("click", () => {
-    button.classList.toggle("opened");
-    isOpened = button.classList.contains("opened").toString();
-    button?.setAttribute("aria-expanded", isOpened);
+    toggleHamburguerMenu();
   });
 </script>

@@ -1,70 +1,56 @@
 ---
 import Section from "../Section.astro";
-import Pastilla from "../Pastilla.astro";
+import Pastilla from "../Pills.astro";
 import { skills } from "./Skills";
 import { projects } from "./Proyectos";
 import ButtonView from "./ButtonView.astro";
-import Github from "../../../public/assets/icons/Github.astro";
-import Eye from "../../../public/assets/Eye.astro";
+import Github from "public/assets/icons/Github.astro";
+import Eye from "public/assets/Eye.astro";
+import ProjectsList from "./ProjectsList.astro";
 ---
 
-<Section id="proyectos" className="pt-32">
-  <header class="flex justify-between items-center">
+<Section id="proyectos" className="pt-32 " isResponsivePadding={true}>
+  <header class="flex justify-between items-center px-4 sm:px-0">
     <h2 class="h2-princpal mt-4">Proyectos y Herramientas</h2>
     <a
       class="text-light-3 font-light border-b-2 border-transparent hover:border-light-3 transition-all ease duration-300"
       href="">Ver todo</a
     >
   </header>
-  <div class="mt-12 flex flex-wrap gap-2">
-    {
-      skills.map((skill) => (
-        <Pastilla>
-          <skill.icon class="size-4" />
-          <span class="font-bold">{skill.name}</span>
-        </Pastilla>
-      ))
-    }
+  <div
+    class="overflow-x-scroll scrollable-element pb-4 sm:overflow-auto sm:pb-0 pl-4 sm:px-0"
+  >
+    <div
+      class="mt-12 flex flex-wrap gap-2 pills-grid transition-colors duration-500 w-[200%] sm:w-[100%]"
+    >
+      {
+        skills.map((skill) => (
+          <Pastilla>
+            <skill.icon class="size-4" />
+            <span class="font-bold">{skill.name}</span>
+          </Pastilla>
+        ))
+      }
+    </div>
   </div>
 
-  <div class="grid grid-cols-3 gap-1 mt-8">
+  <div class="grid grid-template-columns gap-1 mt-8">
+    <!-- <div class="grid grid-cols-3 gap-1 mt-8"> -->
     {
-      projects.map((project, i) => (
-        <button
-          class={`project-card col-span-1 aspect-w-1 aspect-h-1 rounded-md  bg-neutral-100 p-4 dark:bg-background-contrast bg-cover cursor-pointer group relative  ${
-            i === 0 || i === 7 ? "row-span-2 " : "aspect-square"
-          }`}
-          style={`background-image: url(${project.image})`}
-        >
-          <div class="absolute inset-0 group-hover:bg-black/40 group-hover:backdrop-blur-sm group-focus:bg-black/40 group-focus:backdrop-blur-sm z-10" />
-          <div class="absolute inset-0 p-6  group-hover:visible group-focus:visible flex items-center flex-col gap-5 z-10">
-            <header class="text-secondary text-center ">
-              <h5 class="text-xl font-bold font-spaceMono">{project.name}</h5>
-              <h6>{project.type}</h6>
-              {/* <p>{project.description}</p> */}
-            </header>
-            <div class="flex items-center    gap-3">
-              <ButtonView
-                href="/Proyectos"
-                className="bg-primary hover:bg-primary/90"
-              >
-                <span>
-                  <Eye class="size-4" />
-                </span>
-                Ver Proyecto
-              </ButtonView>
-              <ButtonView
-                href="/Proyectos"
-                className=" border-2 border-dark-4 bg-transparent hover:bg-dark-4/90"
-              >
-                {<Github class="size-5 text-black" />}
-              </ButtonView>
-            </div>
-          </div>
-        </button>
-      ))
+      (
+        //
+        <ProjectsList />
+      )
     }
   </div>
 </Section>
 
-<style></style>
+<!-- <style>
+  .pills-grid {
+    &:has(a:hover) {
+      a:not(:hover) {
+        filter: grayscale(100%);
+        opacity: 0.5;
+      }
+    }
+  } -->

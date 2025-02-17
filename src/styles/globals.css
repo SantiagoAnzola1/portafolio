@@ -1,3 +1,4 @@
+@import "@fontsource/poppins/100.css";
 @import "@fontsource/poppins/300.css";
 @import "@fontsource/poppins/400.css";
 @import "@fontsource/poppins/500.css";
@@ -18,19 +19,27 @@
  .dark{
     --primary: 242, 116, 5;/*naranja  */
     /* --secondary-light: 242, 116, 5; */
-    --secondary:255,255,255;/*blanco-textos  */
-    --background: 0, 0, 0;/*fondo  */
-    --background-contrast:23, 23, 23;
+    --secondary:235,235,235;/*blanco-textos  */
+    --third:0,0,0;/*negro-textos  */
+    --pills-hover:242, 242, 242;
+    --background: 20, 20, 20;/*fondo  */
+    --background-contrast:40, 40, 40;
+    --contrast-hover:0, 0, 0;
+    --text-primary:235,235,235;
+    --text-button:20, 20, 20;
+    /* --text-secondary:0,0,0; */
     --secondary-dark: 242, 242, 242;
     --dark-2: 41, 41, 41;
     --dark-3: 22, 22, 23;
     --dark-4: 30, 30, 30;
-    /* --white: 255, 255, 255; */
     --light-2: 217, 217, 217;
     --light-3: 134, 134, 139;
     --blue-1: 0, 119, 237;
     --blue-2: 130, 168, 192;
     --blue-3: 154, 188, 185;
+
+    --nav-size:2.75rem;
+    --padding-inline: 1rem
  }     
  /* .dark-mode {
     --primary: #F2F2F2; */
@@ -55,9 +64,45 @@
     }
 
     body {
-        @apply font-normal max-w-[100vw] overflow-x-hidden ;
+        @apply font-normal max-w-[100vw] overflow-x-hidden min-w-[320px] ;
+
+        --sb-track-color: #424242;
+        --sb-thumb-color: #686868;
+        --sb-thumb-color-hover: #7b7b7b;
+        --sb-size: 9px;
     }
 }
+/* scrollbar */
+body::-webkit-scrollbar, 
+.scrollable-element::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+body::-webkit-scrollbar:horizontal, .scrollable-element::-webkit-scrollbar:horizontal {
+    height: var(--sb-size);
+  }
+body::-webkit-scrollbar-track,
+.scrollable-element::-webkit-scrollbar-track {
+  background: var(--background);
+  border-radius: 25px;
+}
+
+body::-webkit-scrollbar-thumb,
+.scrollable-element::-webkit-scrollbar-thumb {
+  background: var(--sb-track-color);
+  border-radius: 25px;
+}
+
+body::-webkit-scrollbar-thumb:hover,
+.scrollable-element::-webkit-scrollbar-thumb:hover {
+  background: var(--sb-thumb-color-hover);
+}
+  @supports not selector(::-webkit-scrollbar) {
+    body, .scrollable-element {
+        scrollbar-color: var(--sb-thumb-color)
+                       var(--sb-track-color);
+    }
+  }
+
 
 .flex-center {
     @apply flex justify-center items-center
@@ -74,6 +119,106 @@ mark{
  @apply font-spaceMono font-bold text-2xl text-secondary my-4
 }
 
+.grid-template-columns{
+    grid-template-columns: repeat(auto-fit, minmax(395px, 1fr));
+}
+
+@media (width<=880px) {
+    .grid-template-columns{
+        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    }
+}
+@media (width<=395px) {
+    .grid-template-columns{
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* Search Expandible */
+.h-seach-expandible{
+  @apply h-svh md:h-64
+}
+#search-expandible{
+}
+#search-expandible[aria-expanded="true"]{
+  @apply h-svh md:h-64 bg-background-contrast
+
+}
+#search-container{
+  @apply invisible
+}
+#search-expandible[aria-expanded="true"] #search-container {
+  @apply visible
+}
+
+
+/* backgrounblur */
+
+#background-blur[aria-expanded="true"]{
+  @apply visible
+}
+/* Hamburguer Menu */
+/* header {
+  transition: height 0.3s ease-in-out;
+} */
+/* header[aria-expanded="true"] {
+  height: 100dvh;
+} */
+header>div>nav{
+  transition: all 0.3s ease-in-out;
+}
+
+header[aria-expanded="true"] > div > nav{
+  /* position: absolute; */
+  padding-block: var(--nav-size);
+  padding-inline: var(--padding-inline);
+  /* top: 0;
+  left: 0; */
+  height: 100dvh;
+  width: 100%;
+  background: rgba(var(--background-contrast));
+  visibility: visible;
+  height: 100dvh;
+  opacity: 1;
+  overflow-y: auto;
+  transition: height 0.3s ease-in-out, opacity 0s ease-in-out, visibility 0s,position 0s;
+  /* @apply transition-all ease-in-out duration-300  */
+}
+header[aria-expanded="false"] > div > nav {
+  height: 0; /* Asegúrate de que esto también esté en transición */
+  transition: height 0.3s ease-in-out ;
+}
+header[aria-expanded="true"] > div > nav >ul >li{
+  opacity: 1;
+  visibility: visible;
+  animation-delay: 0.3s;
+  transition:  opacity 0.3s ease-in-out;
+  height: var(--nav-size);
+
+  /* @apply transition-all ease-in-out duration-300  */
+}
+header[aria-expanded="true"] > div > nav > ul {
+  display: flex;
+  flex-direction: column;
+}
+
+header[aria-expanded="true"] > div > ul>li:not(#hamburguer-li){
+ visibility: hidden;
+}
+/* Proyectos */
+
+/* projectCards bg image responsive */
+
+  /* Cambia la imagen de fondo para pantallas medianas */
+@media (max-width: 840px) {
+  .responsive-bg {
+    background-image: attr(data-small-url url);
+  }
+}
+
+
+
 
 /* .project-card::before {
     @apply absolute inset-0 bg-black opacity-0 hover:opacity-60 transition-all duration-300 ease-in-out backdrop-blur-lg;
@@ -81,3 +226,6 @@ mark{
     z-index: 100;
 } */
 
+.flex-center{
+  @apply flex justify-center items-center
+}

@@ -1,0 +1,131 @@
+---
+import getProjects from "@/api/api.ts";
+import ButtonView from "./ButtonView.astro";
+import Eye from "public/assets/Eye.astro";
+import Github from "public/assets/icons/Github.astro";
+
+const projects = await getProjects();
+---
+
+{
+  projects.map(
+    (project, i) =>
+      project.featured && (
+        <div
+          tabindex="0"
+          class={`project-img block col-span-1 aspect-w-1 aspect-h-1 rounded-md bg-neutral-100 p-4 dark:bg-background-contrast cursor-pointer group relative bg-contain bg-no-repeat sm:max-h-fit bg-${project.imagePosition} ${
+            i === 0 || i === 7
+              ? `ml:row-span-2 aspect-[4/5] xs:aspect-[4/3] sxs:aspect-[4/5] ml:aspect-[2/5] ml:bg-left`
+              : `aspect-[4/5] xs:aspect-[4/3] sxs:aspect-[4/5] sm:aspect-[4/5] ml:aspect-[4/5] lg:aspect-[4/5]`
+          }`}
+          {...(project.images[1] && {
+            "data-small-url": `${project.images[1]}`,
+          })}
+          data-large-url={`${project.images[0]}`}
+          {...(project.imagePosition[1] && {
+            "data-small-position": `${project.imagePosition[1]}`,
+          })}
+          data-large-position={`${project.imagePosition[0]}`}
+        >
+          <article class=" absolute inset-0 px-8 py-9 flex flex-col justify-between h-100 text-secondary z-20">
+            <a
+              href="hola"
+              class="inline-block absolute inset-0 group-hover:bg-black/40 group-hover:backdrop-blur-sm group-focus:bg-black/40 group-focus:backdrop-blur-sm z-10"
+            />
+            <div
+              class={`group-hover:visible group-focus:visible flex items-center  ${
+                project.infoPosition === "bottom" && "order-2"
+              } flex-col gap-5`}
+            >
+              <header class="text-center z-20 pointer-events-none">
+                <h5 class="text-xl md:text-3xl font-bold font-spaceMono">
+                  {project.title}
+                </h5>
+                <h6 class="md:text-lg font-medium opacity-80 sm:block hidden">
+                  {project.type}
+                </h6>
+                <p class="text-xs md:text-base mt-1 font-normal opacity-90">
+                  {project.small}
+                </p>
+              </header>
+              <div class="flex items-center gap-3 z-20">
+                <ButtonView
+                  href="/Proyectos"
+                  className="bg-primary hover:bg-primary/90"
+                >
+                  <span>
+                    <Eye class="size-4" />
+                  </span>
+                  Ver Proyecto
+                </ButtonView>
+                <ButtonView
+                  targetBlank={true}
+                  href={`${project.github}`}
+                  className="border-[1px] border-transparent bg-background hover:bg-background hover:border-secondary"
+                >
+                  <Github class="size-5 text-white z-10" />
+                </ButtonView>
+              </div>
+            </div>
+            <p class="z-10 text-secondary text-center opacity-80 text-xs invisible group-hover:visible group-focus:visible">
+              {project.technologies}
+            </p>
+          </article>
+        </div>
+      )
+  )
+}
+
+<script>
+  import {
+    addResizeListener,
+    removeResizeListener,
+    getWindowWidth,
+  } from "@/scripts/resizeHandler";
+
+  const projectsImages: NodeListOf<HTMLDivElement> =
+    document.querySelectorAll(".project-img");
+
+  // Crear una copia del  filtrado de los elementos que tienen 'data-small-url'
+  let projectsWithSmallImage: HTMLDivElement[] = Array.from(
+    projectsImages
+  ).filter((projectImage) => {
+    return projectImage.getAttribute("data-small-url") !== null;
+  });
+
+  /**
+   * Verifica si al menos una imagen tiene el atributo 'data-small-url'.
+   * @returns {boolean} - true si hay al menos una imagen con 'data-small-url', false de lo contrario.
+   */
+  function hasSmallImage(): boolean {
+    return projectsWithSmallImage.length > 0;
+  }
+
+  function setBackgroundImage(imageElement: HTMLDivElement[]) {
+    let screenWidth = getWindowWidth();
+
+    imageElement.forEach((projectImage) => {
+      const largeImage = projectImage.getAttribute("data-large-url");
+      const smallImage = projectImage.getAttribute("data-small-url");
+      const isSmallScreen = smallImage && screenWidth < 858;
+
+      const imageUrl = isSmallScreen ? smallImage : largeImage;
+      const imagePosition =
+        projectImage.getAttribute(
+          isSmallScreen ? "data-small-position" : "data-large-position"
+        ) || "";
+
+      if (imageUrl) {
+        projectImage.style.backgroundImage = `url(${imageUrl})`;
+        projectImage.style.backgroundPosition = imagePosition;
+      }
+    });
+  }
+  //inicializar el bg-image de todas las cards
+  setBackgroundImage(Array.from(projectsImages));
+
+  // Solo agregar el listener si hay imágenes con 'data-small-url'
+  if (hasSmallImage()) {
+    addResizeListener(() => setBackgroundImage(projectsWithSmallImage));
+  }
+</script>
